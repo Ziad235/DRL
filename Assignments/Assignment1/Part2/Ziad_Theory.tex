@@ -1,0 +1,103 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin = 1.1in, headheight = 0.9in, footskip = 0.75 in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xparse}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{tikz-cd}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[shortlabels]{enumitem}
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+\usepackage{xpatch}
+\setlength{\parindent}{3em}
+\setlength{\parskip}{0.5em}
+%===================================================================================================
+\pagestyle{fancyplain}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhf{}\par 
+\lhead{\hspace{0cm}\\\hspace{0cm}\\Zmh6339\\AI \& Machine Learning, CS-UH 3260\\Professor Keith Ross}
+\rhead{Ziad Hassan\\January 31, 2024}
+\cfoot{\thepage/\pageref{LastPage}}
+%===================================================================================================
+\title{Assignment 1}
+\date{}
+\author{}
+%===================================================================================================
+\begin{document}
+\maketitle
+%==================================================================================================
+\section*{Part 1: Continuous Bandit Algorithm}
+%==================================================================================================
+\section*{Part 2: Theory}
+\begin{enumerate}[a)]
+    \item \begin{proof}
+        \renewcommand{\qedsymbol}{$\blacksquare$}
+        \hfill\\\\
+        For the algorithm to consider taking the \textit{one} greedy action, two scenarios must be taken into consideration.
+        \\\\
+        The first scenario is that the algorithm decides to take the greedy action, which occurs with probability $1\cdot(1 - \epsilon)$, where $\epsilon$ is the probability of taking a random action, and $1$ is the probability of taking the one greedy action.
+        \\\\
+        The second scenario is that the algorithm decides to take a random action, which occurs with probability $\epsilon$.\\
+        Additionaly, the algorithm chooses a random action with an equal probability for each action; so, the probability of choosing the greedy action is $\frac{\epsilon}{k}$, where $k$ is the number of actions.
+        \\\\
+        Given that the greedy action can be chosen during exploration \textit{or} exploitation, the above probabilities must be added together.\\
+        Therefore, the probability of the algorithm taking the greedy action is $(1 - \epsilon) + \frac{\epsilon}{k}$.\par 
+    \end{proof}
+    %==============================================
+    \item  
+    \begin{enumerate}[i)]
+        \item \begin{proof}
+            \renewcommand{\qedsymbol}{$\blacksquare$}
+            \hfill\\\\
+            To determine the probability that the greedy action was chosen for the first time at time $T$, we need to consider that it was not chosen at any time before $T$, and that it was chosen at time $T$.\\
+            Thus, the following equation should be quantified:
+            \begin{equation*}
+                P(\text{greedy at } T) = P(\text{not greedy before } T) \cdot P(\text{greedy at } T)
+            \end{equation*}
+            Therefore, the probability that the greedy action was chosen for the first time at time $T$ is:
+            \begin{equation*}
+                \begin{aligned}
+                    P(\text{greedy at } T) &= P(\text{not greedy before } T) \cdot P(\text{greedy at } T)\\
+                    &= \left(1 - 1 + \epsilon - \frac{\epsilon}{k}\right)^{T - 1} \cdot \left(1 - \epsilon + \frac{\epsilon}{k}\right)\\
+                    &= \left(\epsilon - \frac{\epsilon}{k}\right)^{T - 1} \cdot \left(1 - \epsilon + \frac{\epsilon}{k}\right)\\
+                \end{aligned}
+            \end{equation*}\par
+        \end{proof}
+
+    \item \begin{proof}
+        \renewcommand{\qedsymbol}{$\blacksquare$}
+        \hfill\\\\
+        To get the expected number of steps, $\mathbb{E}(T)$, until the the greedy action is chosen for the first time is a sum over all possible time steps, each weighted by its probability of being the first time the greedy action is chosen.\\
+        Thus, the following equation should be quantified:
+        \begin{equation*}
+            \mathbb{E}(T) = \sum_{t = 1}^{\infty} t \cdot P(\text{greedy at } t)
+        \end{equation*}
+        Following, the equation is 
+        \begin{equation*}
+            \begin{aligned}
+                \mathbb{E}(T) &= \sum_{t = 1}^{\infty} t \cdot P(\text{greedy at } t)\\
+                &= \sum_{t = 1}^{\infty} t \cdot \left(\epsilon - \frac{\epsilon}{k}\right)^{t - 1} \cdot \left(1 - \epsilon + \frac{\epsilon}{k}\right)\\
+            \end{aligned}
+        \end{equation*}
+        It can be observed that the above equation is a geometric series, which can be simplified to the following:
+        \begin{equation*}
+            \begin{aligned}
+                \mathbb{E}(T) &= \sum_{t = 1}^{\infty} t \cdot \left(\epsilon - \frac{\epsilon}{k}\right)^{t - 1} \cdot \left(1 - \epsilon + \frac{\epsilon}{k}\right)\\
+                &= \ddfrac{1}{\left(\epsilon - \frac{\epsilon}{k}\right)^{t - 1} \cdot \left(1 - \epsilon + \frac{\epsilon}{k}\right)}
+            \end{aligned}
+        \end{equation*}
+        The above simplifciation is valid due to the definiton of the expected value of a geometric series.\par 
+    \end{proof}
+    \end{enumerate}
+\end{enumerate}
+%==================================================================================================
+\end{document}
