@@ -42,15 +42,16 @@
     \item \begin{proof}
         \renewcommand{\qedsymbol}{$\blacksquare$}
         \hfill\\\\
-        For the algorithm to consider taking the \textit{one} greedy action, two scenarios must be taken into consideration.
-        \\\\
-        The first scenario is that the algorithm decides to take the greedy action, which occurs with probability $1\cdot(1 - \epsilon)$, where $\epsilon$ is the probability of taking a random action, and $1$ is the probability of taking the one greedy action.
-        \\\\
-        The second scenario is that the algorithm decides to take a random action, which occurs with probability $\epsilon$.\\
-        Additionaly, the algorithm chooses a random action with an equal probability for each action; so, the probability of choosing the greedy action is $\frac{\epsilon}{k}$, where $k$ is the number of actions.
-        \\\\
-        Given that the greedy action can be chosen during exploration \textit{or} exploitation, the above probabilities must be added together.\\
-        Therefore, the probability of the algorithm taking the greedy action is $(1 - \epsilon) + \frac{\epsilon}{k}$.\par 
+        \begin{equation*}
+            \begin{aligned}
+                P(\text{greedy action}) &= 1 - P(\text{not greedy action})\\
+                &= 1 - P(\text{not greedy selection \textit{AND} not greedy action})\\
+                &= 1 - P(\text{not greedy selection}) \cdot P(\text{not greedy action $|$ not greedy selection})\\
+                &= 1 - \epsilon \cdot \left(\ddfrac{k-1}{k}\right) \textit{\hspace{1cm}$^{*}$ Since there is only \textbf{one} greedy action}\\
+                &= 1 - \epsilon \cdot \left(1-\ddfrac{1}{k}\right)\\
+                &= 1 - \epsilon + \ddfrac{\epsilon}{k}\\
+            \end{aligned}
+        \end{equation*}
     \end{proof}
     %==============================================
     \item  
@@ -76,27 +77,59 @@
     \item \begin{proof}
         \renewcommand{\qedsymbol}{$\blacksquare$}
         \hfill\\\\
-        To get the expected number of steps, $\mathbb{E}(T)$, until the the greedy action is chosen for the first time is a sum over all possible time steps, each weighted by its probability of being the first time the greedy action is chosen.\\
+        To get the expected number of steps, $\mathbb{E}[T]$, until the the greedy action is chosen for the first time is a sum over all possible time steps, each weighted by its probability of being the first time the greedy action is chosen.\\
         Thus, the following equation should be quantified:
         \begin{equation*}
-            \mathbb{E}(T) = \sum_{t = 1}^{\infty} t \cdot P(\text{greedy at } t)
+            \mathbb{E}[T] = \sum_{t = 1}^{\infty} t \cdot P(\text{greedy at } t)
         \end{equation*}
         Following, the equation is 
         \begin{equation*}
             \begin{aligned}
-                \mathbb{E}(T) &= \sum_{t = 1}^{\infty} t \cdot P(\text{greedy at } t)\\
+                \mathbb{E}[T] &= \sum_{t = 1}^{\infty} t \cdot P(\text{greedy at } t)\\
                 &= \sum_{t = 1}^{\infty} t \cdot \left(\epsilon - \frac{\epsilon}{k}\right)^{t - 1} \cdot \left(1 - \epsilon + \frac{\epsilon}{k}\right)\\
             \end{aligned}
         \end{equation*}
         It can be observed that the above equation is a geometric series, which can be simplified to the following:
         \begin{equation*}
             \begin{aligned}
-                \mathbb{E}(T) &= \sum_{t = 1}^{\infty} t \cdot \left(\epsilon - \frac{\epsilon}{k}\right)^{t - 1} \cdot \left(1 - \epsilon + \frac{\epsilon}{k}\right)\\
+                \mathbb{E}[T] &= \sum_{t = 1}^{\infty} t \cdot \left(\epsilon - \frac{\epsilon}{k}\right)^{t - 1} \cdot \left(1 - \epsilon + \frac{\epsilon}{k}\right)\\
                 &= \ddfrac{1}{\left(\epsilon - \frac{\epsilon}{k}\right)^{t - 1} \cdot \left(1 - \epsilon + \frac{\epsilon}{k}\right)}
             \end{aligned}
-        \end{equation*}
+        \end{equation*}\par
         The above simplifciation is valid due to the definiton of the expected value of a geometric series.\par 
     \end{proof}
+    \end{enumerate}
+    %==============================================
+    \item 
+    \begin{enumerate}[i)]
+        \item 
+        \begin{proof}
+            \renewcommand{\qedsymbol}{$\blacksquare$}
+            \hfill\\\\
+            Firstly, denote $\max(q(1), q(2), \dots, q(10))$ as $q_{*}$.\\
+            The algorithm will choose the greedy selection, $q_{*}$ with probability $1 - \epsilon$, and a non-greedy selection with probability $\epsilon$.\\
+            Moreover, the expected value of the an action during non-greedy selection is the average of all the action values, which is $\frac{\sum_{i = 1}^{10} q(i)}{10}$.\\
+            Therefore, the long-run reward is 
+            \begin{equation*}
+                R = (1 - \epsilon) \cdot q_{*} + \epsilon \cdot \frac{\sum_{i = 1}^{10} q(i)}{10}
+            \end{equation*}\par 
+        \end{proof}
+        
+        \item 
+        \begin{proof}
+           \renewcommand{\qedsymbol}{$\blacksquare$}
+            \hfill\\\\
+           Since $q(1), q(2), \dots, q(10)$ are i.i.d. random variables, the expected value of a greedy action becomes $\mathbb{E}[q_{*}] = b$.\\
+           Moreover, since $q(a)$ is $\mathcal{N}(0,1)$, the expected average of all the action values becomes $\mathbb{E}\left[\frac{\sum_{i = 1}^{10} q(i)}{10}\right] = 0$.\\
+           Therefore, the long-run reward is
+           \begin{equation*}
+               \begin{aligned}
+                   R &= (1 - \epsilon) \cdot \mathbb{E}[q_{*}] + \epsilon \cdot \mathbb{E}\left[\frac{\sum_{i = 1}^{10} q(i)}{10}\right]\\
+                   &= (1 - \epsilon) \cdot b + \epsilon \cdot 0\\
+                   &= (1 - \epsilon) \cdot b
+               \end{aligned}
+           \end{equation*}\par 
+        \end{proof}
     \end{enumerate}
 \end{enumerate}
 %==================================================================================================
