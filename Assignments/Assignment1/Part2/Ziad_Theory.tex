@@ -15,6 +15,18 @@
 \usepackage{pgfplots}
 \usepackage{bbm}
 \usepackage[shortlabels]{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=red
+    }
+
+\urlstyle{same}
 \newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
 \newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
 \usepackage{xpatch}
@@ -37,6 +49,71 @@
 \maketitle
 %==================================================================================================
 \section*{Part 1: Continuous Bandit Algorithm}
+\subsection*{Link to Google Colab}
+% add a link to the colab notebook as hyperlink here
+\href{https://colab.research.google.com/drive/1vRuHc6DXpbGOX94KGNAtKen7xMg2giJH?usp=sharing}{Here is the link to the Google Colab notebook for the code.}
+
+
+\subsection*{Pseudocode}
+\begin{algorithm}
+    \caption{Neural Network Algorithm for Continuous Bandit Problem}
+    \begin{algorithmic}[1]
+    \State Initialize parameters: dimension $d$, matrix $R$, learning rate, initial samples, iterations, samples per iteration
+    \State Define $cost\_function(a, R)$
+    \State Define $generate\_random\_actions(num\_samples, d)$
+    \State Define MLPWithGrad with $input\_dim$
+    \State Define $train\_model(model, optimizer, loss\_function, actions, costs, epochs)$
+    \State Define $guided\_sampling(model, num\_samples, d, num\_candidates)$
+    \State $initial\_actions, initial\_costs \gets$ Generate and calculate costs
+    \State $actions\_tensor, costs\_tensor \gets$ Convert to tensors
+    \State Set up MLP model and optimizer
+    \State Train MLP model on initial samples
+    \For{each iteration}
+        \State $new\_actions \gets$ Guided sampling using MLP model
+        \State $new\_costs \gets$ Calculate costs for new actions
+        \State Update and retrain MLP model with new data
+    \EndFor
+    \State $best\_action, best\_cost \gets$ Find action with minimum cost
+    \end{algorithmic}
+    \end{algorithm}
+
+\subsection*{Algorithm Description}
+\hfill\\ 
+This algorithm combines initial random sampling with guided sampling by through a neural network. 
+The process begins with randomly sampling actions within the defined action space. 
+These initial samples provide a diverse starting point for the model without any initial bias.
+This phase (random sampling) would count as the ``exploration."\\
+
+The core of the algorithm lies in its iterative refinement process, which employs a neural network, specifically a Multi-Layer Perceptron (MLP).
+The MLP is trained to approximate the unknown cost function based on the initial samples. 
+As the model learns, it guides the sampling of new actions. Here, the algorithm exploits the model's predictive power to focus on areas in the action space where lower costs are anticipated. 
+This guided sampling, which is done by the neural network's approximation of the cost function, enables a more focused exploration of the action space. 
+Iterating between model training and guided sampling allows the algorithm to navigate the high-dimensional space, progressively going toward the action that minimizes the cost, thereby optimizing the solution to the continuous bandit problem.
+
+\subsection*{Algorithm Results}
+\subsubsection*{Baseline Algorithm}
+\begin{itemize}
+    \item \underline{$R = \mathbb{I}_{30}$}\par
+    \includegraphics[scale=0.5]{BI.png}
+    \item \underline{$R= $ random matrix}\par
+    \includegraphics[scale=0.5]{BR.png}
+\end{itemize}
+
+\subsubsection*{Neural Network Algorithm}
+Hyperparameters: 
+\begin{verbatim}
+num_initial_samples = 100
+num_iterations = 990
+num_samples_per_iter = 10
+learning_rate = 0.001
+Total number of samples: 100 + 990*10 = 10,000
+\end{verbatim}
+\begin{itemize}
+    \item \underline{$R = \mathbb{I}_{30}$}\par
+    \includegraphics[scale = 0.5]{NI.png}
+    \item \underline{$R= $ random matrix}\par
+    \includegraphics[scale=0.5]{NR.png}
+\end{itemize}
 %==================================================================================================
 \section*{Part 2: Theory}
 \begin{enumerate}[a)]
