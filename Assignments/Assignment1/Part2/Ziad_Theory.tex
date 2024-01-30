@@ -365,10 +365,9 @@ where \( \Delta_i = q_*(a^*) - q_*(a_i) \) is the regret associated with choosin
         \renewcommand{\qedsymbol}{$\blacksquare$}
         \hfill\\\\
         \begin{itemize}
-            \item \underline{Theorem $7.1$ Recap}\par
+            \item \underline{Theorem $7.1$ Condition}\par
             Theorem $7.1$ provides an upper bound on the regret $R_n$ for the UCB algorithm:
-            \[ R_n \leq 3 \sum_{i=1}^{k} \Delta_i + \sum_{i: \Delta_i > 0} \frac{16 \log(n)}{\Delta_i} \]
-            where $\Delta_i$ is the difference between the expected reward of the optimal arm and arm $i$.
+            Under the conditions of Theorem 7.1 and using Algorithm 3, the expected estimated value of the action selected at a large time step $n$ converges to the true value of the best action.
 
             \item \underline{Definition of $Q_n$}\par 
             $Q_n$ is defined as the average of rewards received from taking action $a$ up to time $t$:
