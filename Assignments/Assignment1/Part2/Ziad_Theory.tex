@@ -177,6 +177,15 @@ Hyperparameters:
             \end{aligned}
         \end{equation*}\par
         The above simplifciation is valid due to the definiton of the expected value of a geometric series.\par 
+
+        On the other hand, if you consider the expected number of time-steps until \textit{a} greedy action is chosen, then the formula becomes
+        \begin{equation*}
+            \begin{aligned}
+                \mathbb{E}[T] &= \sum_{t = 1}^{\infty} t \cdot P(\text{greedy action })\\
+                &= \sum_{t = 1}^{\infty} t \cdot \left(1 - \epsilon + \frac{\epsilon}{k}\right)\\
+                &= \ddfrac{1}{\left(1 - \epsilon + \frac{\epsilon}{k}\right)}
+            \end{aligned}
+        \end{equation*}
     \end{proof}
     \end{enumerate}
     %==============================================
