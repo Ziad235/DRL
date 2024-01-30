@@ -63,33 +63,34 @@
     \State Define $generate\_random\_actions(num\_samples, d)$
     \State Define MLPWithGrad with $input\_dim$
     \State Define $train\_model(model, optimizer, loss\_function, actions, costs, epochs)$
-    \State Define $guided\_sampling(model, num\_samples, d, num\_candidates)$
+    \State Define $gradient\_descent\_on\_action(model, action, learning\_rate, steps)$
+    \State Define $select\_actions\_based\_on\_prediction(model, num\_actions, d, num\_candidates)$
     \State $initial\_actions, initial\_costs \gets$ Generate and calculate costs
     \State $actions\_tensor, costs\_tensor \gets$ Convert to tensors
     \State Set up MLP model and optimizer
     \State Train MLP model on initial samples
     \For{each iteration}
-        \State $new\_actions \gets$ Guided sampling using MLP model
-        \State $new\_costs \gets$ Calculate costs for new actions
-        \State Update and retrain MLP model with new data
+        \State $selected\_actions \gets$ Select actions based on MLP predictions
+        \For{each action in $selected\_actions$}
+            \State $refined\_action \gets$ Apply gradient descent on action
+            \State Update actions and costs tensors with $refined\_action$
+        \EndFor
+        \State Retrain MLP model with updated data
     \EndFor
     \State $best\_action, best\_cost \gets$ Find action with minimum cost
     \end{algorithmic}
-    \end{algorithm}
+\end{algorithm}
 
 \subsection*{Algorithm Description}
 \hfill\\ 
-This algorithm combines initial random sampling with guided sampling by through a neural network. 
-The process begins with randomly sampling actions within the defined action space. 
-These initial samples provide a diverse starting point for the model without any initial bias.
-This phase (random sampling) would count as the ``exploration."\\
+This algorithm combines a neural network-based prediction model with an optimized action selection strategy.
+Initially, it uses random sampling to gather a diverse set of actions from the space \([-2, 2]^d\). These actions and their associated costs, calculated using a predetermined cost function, form the training data for a Multi-Layer Perceptron (MLP). 
+The MLP, designed to approximate the cost function, learns from this data, enabling it to make informed predictions about the costs of new actions.
 
-The core of the algorithm lies in its iterative refinement process, which employs a neural network, specifically a Multi-Layer Perceptron (MLP).
-The MLP is trained to approximate the unknown cost function based on the initial samples. 
-As the model learns, it guides the sampling of new actions. Here, the algorithm exploits the model's predictive power to focus on areas in the action space where lower costs are anticipated. 
-This guided sampling, which is done by the neural network's approximation of the cost function, enables a more focused exploration of the action space. 
-Iterating between model training and guided sampling allows the algorithm to navigate the high-dimensional space, progressively going toward the action that minimizes the cost, thereby optimizing the solution to the continuous bandit problem.
-
+The main part of the algorithm lies in its iterative refinement process, where it selects new actions based on the MLP's cost predictions, rather than random sampling all $10,000$ actions like the baseline algorithm.
+This method represents a shift from exploration to exploitation by using the MLP's learned patterns to guide the search towards areas in the action space predicted to yield lower costs. 
+Selected actions are further refined through gradient descent, adjusting them in the direction that minimizes the predicted cost. 
+This approach ensures that the algorithm not only learns from its past experiences (initial random samples) but also actively makes it explore in a more focused manner to quickly find the optimal action.
 \subsection*{Algorithm Results}
 \subsubsection*{Baseline Algorithm}
 \begin{itemize}
@@ -102,11 +103,11 @@ Iterating between model training and guided sampling allows the algorithm to nav
 \subsubsection*{Neural Network Algorithm}
 Hyperparameters: 
 \begin{verbatim}
-num_initial_samples = 100
-num_iterations = 990
-num_samples_per_iter = 10
-learning_rate = 0.001
-Total number of samples: 100 + 990*10 = 10,000
+    num_initial_samples = 500
+    num_iterations = 95
+    num_samples_per_iter = 100
+    Total number of samples = 500 + (95 * 100) = 10,000
+    learning_rate = 0.01
 \end{verbatim}
 \begin{itemize}
     \item \underline{$R = \mathbb{I}_{30}$}\par
