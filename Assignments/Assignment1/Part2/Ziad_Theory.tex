@@ -157,11 +157,26 @@ Hyperparameters:
     \item \begin{proof}
         \renewcommand{\qedsymbol}{$\blacksquare$}
         \hfill\\\\
-        To get the expected number of steps, $\mathbb{E}[T]$, until a greedy action is chosen, we can consider $P(\text{greedy action})$ as a geometric series.
-        Therefore, the expected number of steps until a greedy action is chosen is:
+        To get the expected number of steps, $\mathbb{E}[T]$, until the the greedy action is chosen for the first time is a sum over all possible time steps, each weighted by its probability of being the first time the greedy action is chosen.\\
+        Thus, the following equation should be quantified:
         \begin{equation*}
-            \mathbb{E}[T] = \frac{1}{1-\epsilon + \frac{\epsilon}{k}}
+            \mathbb{E}[T] = \sum_{t = 1}^{\infty} t \cdot P(\text{greedy at } t)
         \end{equation*}
+        Following, the equation is 
+        \begin{equation*}
+            \begin{aligned}
+                \mathbb{E}[T] &= \sum_{t = 1}^{\infty} t \cdot P(\text{greedy at } t)\\
+                &= \sum_{t = 1}^{\infty} t \cdot \left(\epsilon - \frac{\epsilon}{k}\right)^{t - 1} \cdot \left(1 - \epsilon + \frac{\epsilon}{k}\right)\\
+            \end{aligned}
+        \end{equation*}
+        It can be observed that the above equation is a geometric series, which can be simplified to the following:
+        \begin{equation*}
+            \begin{aligned}
+                \mathbb{E}[T] &= \sum_{t = 1}^{\infty} t \cdot \left(\epsilon - \frac{\epsilon}{k}\right)^{t - 1} \cdot \left(1 - \epsilon + \frac{\epsilon}{k}\right)\\
+                &= \ddfrac{1}{\left(\epsilon - \frac{\epsilon}{k}\right)^{t - 1} \cdot \left(1 - \epsilon + \frac{\epsilon}{k}\right)}
+            \end{aligned}
+        \end{equation*}\par
+        The above simplifciation is valid due to the definiton of the expected value of a geometric series.\par 
     \end{proof}
     \end{enumerate}
     %==============================================
