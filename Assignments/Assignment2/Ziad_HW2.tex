@@ -51,9 +51,94 @@
 \maketitle
 %==================================================================================================
 \section*{Part 1}
+\subsection*{Variant 1}
+Variants are clipping the gradients of b as well, using larger learning rate for Q and b, and transforming the buffer to a deque to allow for faster sampling and prioritized experience replay.
+
+\subsection*{Variant 2}
+Variant adds optimization of the $Q$ function and $b$ target parameter using the Adam optimizer.
+
+\subsection*{Variant 3}
+Variant increases $Q$ network size and adds a dropout layer to the $Q$ network.
+
+\subsection*{Variant 4}
+Variant adds a batch normalization layer to the $Q$ network and decreases the learning rate for the $b$ target parameter while increasing the deque size for experience replay and adding prioritized experience replay.
+
+\subsection*{Variant 5}
+Variant changes optimization technique for the $Q$ function and $b$ target parameter to stochastic gradient descent and replaces ReLu activation function with a Tan H activation function.
+
+\subsection*{Final Cost Graph of the Variants using $R=\mathbb{I}_{30\times30}$ Across $10$ Iterations and their Mean}
+\begin{center}
+    \includegraphics[scale=0.5]{RI/baseline.png}
+\end{center}
+\begin{center}
+    \includegraphics[scale=0.5]{RI/MLP1.png}
+\end{center}
+\begin{center}
+    \includegraphics[scale=0.5]{RI/MLP2.png}
+\end{center}
+\begin{center}
+    \includegraphics[scale=0.5]{RI/MLP3.png}
+\end{center}
+\begin{center}
+    \includegraphics[scale=0.5]{RI/MLP4.png}
+\end{center}
+\begin{center}
+    \includegraphics[scale=0.5]{RI/MLP5.png}
+\end{center}
+
+\subsection*{Final Cost Graph of the Variants using $R_{30\times30}$ Across $10$ Iterations and their Mean}
+\begin{center}
+    \includegraphics[scale=0.5]{RR/Base.png}
+\end{center}
+\begin{center}
+    \includegraphics[scale=0.5]{RR/MLP1.png}
+\end{center}
+\begin{center}
+    \includegraphics[scale=0.5]{RR/MLP2.png}
+\end{center}
+\begin{center}
+    \includegraphics[scale=0.5]{RR/MLP3.png}
+\end{center}
+\begin{center}
+    \includegraphics[scale=0.5]{RR/MLP4.png}
+\end{center}
+\begin{center}
+    \includegraphics[scale=0.5]{RR/MLP5.png}
+\end{center}
+
+
+
+\subsection*{Graph of the Variants using $=\mathbb{I}_{30\times 30}$ Across $10$ Iterations}
+This graph represents the mean of the rewards across the $10$ iterations by taking the average of each batch.
+\begin{center}
+    \includegraphics[scale=0.5]{RI/MLPcosts.png}
+\end{center}
+
+\subsection*{Graph of the Variants using $R_{30\times30}$ Across $10$ Iterations}
+This graph represents the mean of the rewards across the $10$ iterations by taking the average of each batch.
+\begin{center}
+    \includegraphics[scale=0.5]{RR/MLPcosts.png}
+\end{center}
+
+
 %==================================================================================================
 \section*{Part 2}
 \subsection*{1)}
+
+The pseudo-code provided describes a variation of the Deep Deterministic Policy Gradient (DDPG) algorithm, tailored for a bandit problem with action dimension \( n \). The algorithm begins with an initial target parameter \( b \), and Q-function parameters \( \theta \). Action-reward pairs \( (a_i, r_i) \) are sampled, and the reward function \( r(\cdot) \) is stored in a buffer \( D \). The main loop involves generating actions by adding Gaussian noise to the target parameter \( b \), executing the action, storing the action-reward pair in \( D \), sampling a mini-batch from \( D \), and updating the Q-function and the target parameter \( b \) using gradient descent.
+
+In contrast, the DDPG algorithm, as described in the Spinning Up documentation, involves a sequence of steps tailored to reinforcement learning environments with continuous action spaces. It updates policy parameters \( \theta \), Q-function parameters \( \phi \), and their target parameters \( \theta_{\text{targ}} \) and \( \phi_{\text{targ}} \) using a replay buffer \( \mathcal{D} \). The DDPG algorithm selects an action by observing the current state and adding exploration noise, executes it, observes the next state, reward, and done signal, stores the transition in \( \mathcal{D} \), and updates the policy and Q-function if the update conditions are met. These updates use a mini-batch from \( \mathcal{D} \) to compute target values and perform gradient ascent on policy parameters and gradient descent on the Q-function parameters. Target networks are updated through Polyak averaging.
+
+The key differences between the provided pseudo-code and the standard DDPG algorithm are:
+
+\begin{enumerate}
+  \item The pseudo-code is for a bandit problem, which is a single-step decision-making process, as opposed to the multi-step process in environments where DDPG is applied.
+  \item The pseudo-code updates a single target parameter \( b \), while DDPG updates policy parameters \( \theta \), Q-function parameters \( \phi \), and their target counterparts.
+  \item DDPG includes exploration noise directly in the action selection step and uses Polyak averaging for updating the target networks, promoting stable learning.
+  \item DDPG employs replay buffers and target networks to stabilize training, which are crucial in sequential decision-making.
+\end{enumerate}
+
+Both algorithms utilize gradient descent to update the Q-function, but the implementation details are tailored to the specific problems they aim to solve.
 %========================================================
 \subsection*{Exercise 3.14}
 \begin{proof}
