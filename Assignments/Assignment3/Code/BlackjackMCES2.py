@@ -89,19 +89,34 @@ def monte_carlo_ES(episodes):
             Q_values.append(Q[((18, 8, False), ACTION_STICK)])
     return Q_values
 
-# Run Monte Carlo ES for 100,000 episodes, and check how much time it takes
+def play_game_episodes(episodes):
+    wins = 0
+    for _ in range(episodes):
+        _, result = play_episode()
+        if result == 1:  # Win condition
+            wins += 1
+    # Calculate win percentage
+    win_percentage = (wins / episodes) * 100
+    return wins, win_percentage
+
+# Run Monte Carlo ES for 10,000 episodes, and check how much time it takes
 start_time = time.time()
-Q_values = monte_carlo_ES(100000)
+Q_values = monte_carlo_ES(10000)
 end_time = time.time()
-print("Time taken for 100,000 episodes: ", end_time - start_time)
+print("Training time taken for 10,000 episodes: ", end_time - start_time)
 
 # Plotting
 plt.figure(figsize=(14, 7))
 plt.title("Values of Q(s, a) for state (18, 8, False) and action STICK")
 plt.xlabel("Episodes")
 plt.ylabel("Q(s, a)")
-plt.plot(range(100, 100001, 100), Q_values, marker='.', linestyle='-', color='g')
+plt.plot(range(100, 10001, 100), Q_values, marker='.', linestyle='-', color='g')
 plt.grid(True, which="both", ls="-")
 plt.tight_layout()
 # plt.savefig("Assignments/Assignment3/Report/Q_values2.png")
 plt.show()
+
+L = 100000
+wins, win_percentage = play_game_episodes(L)
+print(f"Out of {L} episodes, won {wins} times. Win percentage: {win_percentage}%")
+
