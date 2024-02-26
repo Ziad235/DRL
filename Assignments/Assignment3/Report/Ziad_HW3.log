@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.6.30)  24 FEB 2024 22:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.6.30)  26 FEB 2024 19:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -733,17 +733,27 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 53.
  (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<Q_values.png, id=7, 867.24pt x 433.62pt>
+<Q_values.png, id=7, 1011.78pt x 505.89pt>
 File: Q_values.png Graphic file (type png)
 <use Q_values.png>
 Package pdftex.def Info: Q_values.png  used on input line 58.
-(pdftex.def)             Requested size: 433.61894pt x 216.80946pt.
-<Q_values2.png, id=9, 867.24pt x 433.62pt>
+(pdftex.def)             Requested size: 505.88876pt x 252.94437pt.
+
+Overfull \hbox (50.58864pt too wide) in paragraph at lines 58--59
+ [] 
+ []
+
+<Q_values2.png, id=9, 1011.78pt x 505.89pt>
 File: Q_values2.png Graphic file (type png)
 <use Q_values2.png>
 Package pdftex.def Info: Q_values2.png  used on input line 66.
-(pdftex.def)             Requested size: 433.61894pt x 216.80946pt.
- [1{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+(pdftex.def)             Requested size: 505.88876pt x 252.94437pt.
+
+Overfull \hbox (50.58864pt too wide) in paragraph at lines 66--67
+ [] 
+ []
+
+[1{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
  <./Q_values.png>] [2 <./Q_values2.png>] 
 enddocument/afterlastpage: lastpage setting LastPage.
@@ -760,7 +770,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  98i,11n,103p,826b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Ziad_HW3.pdf (2 pages, 138943 bytes).
+Output written on Ziad_HW3.pdf (2 pages, 157397 bytes).
 PDF statistics:
  54 PDF objects out of 1000 (max. 8388607)
  35 compressed objects within 1 object stream

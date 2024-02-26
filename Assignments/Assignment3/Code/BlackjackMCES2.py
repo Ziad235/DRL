@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import time # to measure time taken for 100,000 episodes
 
 # Constants
 ACTION_HIT = 1
@@ -88,15 +89,18 @@ def monte_carlo_ES(episodes):
             Q_values.append(Q[((18, 8, False), ACTION_STICK)])
     return Q_values
 
-# Run Monte Carlo ES for 10,000 episodes
-Q_values = monte_carlo_ES(10000)
+# Run Monte Carlo ES for 100,000 episodes, and check how much time it takes
+start_time = time.time()
+Q_values = monte_carlo_ES(100000)
+end_time = time.time()
+print("Time taken for 100,000 episodes: ", end_time - start_time)
 
 # Plotting
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(14, 7))
 plt.title("Values of Q(s, a) for state (18, 8, False) and action STICK")
 plt.xlabel("Episodes")
 plt.ylabel("Q(s, a)")
-plt.plot(range(100, 10001, 100), Q_values, marker='.', linestyle='-', color='g')
+plt.plot(range(100, 100001, 100), Q_values, marker='.', linestyle='-', color='g')
 plt.grid(True, which="both", ls="-")
 plt.tight_layout()
 # plt.savefig("Assignments/Assignment3/Report/Q_values2.png")
