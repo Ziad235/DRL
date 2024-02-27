@@ -10,7 +10,11 @@ policy = {}
 for player_sum in range(12, 22):
     for dealer_card in range(1, 11):
         for usable_ace in (False, True):
+            # Policy from the book
             policy[(player_sum, dealer_card, usable_ace)] = ACTION_STICK if player_sum >= 20 else ACTION_HIT
+
+            # Random policy
+            # policy[(player_sum, dealer_card, usable_ace)] = np.random.choice(ACTIONS)
 Q = {}
 Returns = {}
 for state in policy.keys():
