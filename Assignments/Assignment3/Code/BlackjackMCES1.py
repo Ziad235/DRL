@@ -100,10 +100,10 @@ def play_game_episodes(episodes):
     return wins, win_percentage
 
 # Run Monte Carlo ES for 10,000 episodes, and check how much time it takes
-start_time = time.time()
+start_time1 = time.time()
 Q_values = monte_carlo_ES(10000)
-end_time = time.time()
-print("Training time taken for 10,000 episodes: ", end_time - start_time)
+end_time1 = time.time()
+print("Training time taken for 10,000 episodes: ", end_time1 - start_time1)
 
 # Plotting
 plt.figure(figsize=(14, 7))
@@ -119,7 +119,9 @@ plt.show()
 print("Going to play 100,000 episodes to check the winning percentage")
 
 L = 100000
+start_time2 = time.time()
 wins, win_percentage = play_game_episodes(L)
+end_time2 = time.time()
 # plot the winning times for 100,000 episodes (binary plot)
 plt.figure(figsize=(14, 7))
 plt.title("Winning Times for 100,000 episodes")
@@ -131,5 +133,13 @@ plt.text(0.5, 0.9, f"Winning Percentage: {win_percentage:.2f}%", ha='center', va
 plt.tight_layout()
 # plt.savefig("Assignments/Assignment3/Report/MCES1Winning_Times.png")
 plt.show()
+
+print(f"Training time taken for 10,000 episodes: {end_time1 - start_time1:.2f} seconds")
+print(f"Testing ime taken for 100,000 episodes: {end_time2 - start_time2:.2f} seconds")
+print(f"Total time taken: {end_time2 - start_time1:.2f} seconds")
+
+# Training time taken for 10,000 episodes: 0.41 seconds
+# Testing ime taken for 100,000 episodes: 1.36 seconds
+# Total time taken: 4.43 seconds
 
 

@@ -6,6 +6,8 @@ import time # to measure time taken for 100,000 episodes
 ACTION_HIT = 1
 ACTION_STICK = 0
 ACTIONS = [ACTION_STICK, ACTION_HIT]
+SPECIFIC_STATE = (18, 8, False)  # Specific state to check the Q value for
+SPECIFIC_ACTION = ACTION_STICK  # Specific action to check the Q value for
 policy = {}
 for player_sum in range(12, 22):
     for dealer_card in range(1, 11):
@@ -90,7 +92,7 @@ def monte_carlo_ES(episodes):
             # Greedily update the policy for the state
             policy[state] = np.argmax([Q[(state, a)] for a in ACTIONS])
         if episode_num % 100 == 0:
-            Q_values.append(Q[((18, 8, False), ACTION_STICK)])
+            Q_values.append(Q[(SPECIFIC_STATE, SPECIFIC_ACTION)])
     return Q_values
 
 def play_game_episodes(episodes):
@@ -104,14 +106,13 @@ def play_game_episodes(episodes):
     return wins, win_percentage
 
 # Run Monte Carlo ES for 10,000 episodes, and check how much time it takes
-start_time = time.time()
+start_time1 = time.time()
 Q_values = monte_carlo_ES(10000)
-end_time = time.time()
-print("Training time taken for 10,000 episodes: ", end_time - start_time)
+end_time1 = time.time()
 
 # Plotting
 plt.figure(figsize=(14, 7))
-plt.title("Values of Q(s, a) for state (18, 8, False) and action STICK")
+plt.title(f"Values of Q(s, a) for state {SPECIFIC_STATE} and action {SPECIFIC_ACTION}")
 plt.xlabel("Episodes")
 plt.ylabel("Q(s, a)")
 plt.plot(range(100, 10001, 100), Q_values, marker='.', linestyle='-', color='g')
@@ -121,7 +122,9 @@ plt.tight_layout()
 plt.show()
 
 L = 100000
+start_time2 = time.time()
 wins, win_percentage = play_game_episodes(L)
+end_time2 = time.time()
 # plot the winning times for 100,000 episodes (binary plot)
 plt.figure(figsize=(14, 7))
 plt.title("Winning Times for 100,000 episodes")
@@ -134,3 +137,10 @@ plt.tight_layout()
 # plt.savefig("Assignments/Assignment3/Report/MCES2Winning_Times.png")
 plt.show()
 
+print(f"Training time taken for 10,000 episodes: {end_time1 - start_time1:.2f} seconds")
+print(f"Testing ime taken for 100,000 episodes: {end_time2 - start_time2:.2f} seconds")
+print(f"Total time taken: {end_time2 - start_time1:.2f} seconds")
+
+# Training time taken for 10,000 episodes: 0.48 seconds
+# Testing ime taken for 100,000 episodes: 1.63 seconds
+# Total time taken: 8.85 seconds

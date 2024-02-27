@@ -78,7 +78,7 @@ def test_policy(Q):
             wins += 1
     return wins / TEST_EPISODES
 
-def train_and_test(alpha, episodes=100000):
+def train_and_test(alpha, episodes=10000):
     Q = {}
     test_results = []
     specific_Q_values = []  # To track Q(s, STICK) for the specific state over episodes
@@ -130,9 +130,11 @@ def train_and_test(alpha, episodes=100000):
 # test time taken for 100000 episodes
 for alpha in ALPHAS:
     start_time = time.time()
-    train_and_test(alpha, episodes=100000)
+    train_and_test(alpha, episodes=10000)
     end_time = time.time()
-    print(f"Training and testing time taken for 100,000 episodes with alpha = {alpha}: {end_time - start_time:.2f} seconds")
+    print(f"Training (for 10,000 episodes) and testing (for 100,000 episodes) time taken for episodes with alpha = {alpha}: {end_time - start_time:.2f} seconds")
 
 
 
+# Training (for 10,000 episodes) and testing (for 100,000 episodes) time taken for episodes with alpha = 0.01: 21.71 seconds
+# Training (for 10,000 episodes) and testing (for 100,000 episodes) time taken for episodes with alpha = 0.1: 19.48 seconds
