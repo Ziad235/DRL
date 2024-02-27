@@ -122,5 +122,15 @@ plt.show()
 
 L = 100000
 wins, win_percentage = play_game_episodes(L)
-print(f"Out of {L} episodes, won {wins} times. Win percentage: {win_percentage}%")
+# plot the winning times for 100,000 episodes (binary plot)
+plt.figure(figsize=(14, 7))
+plt.title("Winning Times for 100,000 episodes")
+plt.xlabel("Episodes")
+plt.ylabel("Winning Times")
+plt.plot(range(1, L + 1), [1 if i <= wins else 0 for i in range(1, L + 1)], marker='.', linestyle='-', color='orange')
+plt.grid(True, which="both", ls="-")
+plt.text(0.5, 0.9, f"Winning Percentage: {win_percentage:.2f}%", ha='center', va='center', transform=plt.gca().transAxes)
+plt.tight_layout()
+# plt.savefig("Assignments/Assignment3/Report/MCES2Winning_Times.png")
+plt.show()
 

@@ -9,7 +9,7 @@ ACTIONS = [ACTION_STICK, ACTION_HIT]
 EPSILON = 0.1
 L = 2000  # Number of episodes between tests
 ALPHAS = [0.01, 0.1]
-TEST_EPISODES = 10000
+TEST_EPISODES = 100000
 
 # Function Definitions (deal_card, has_usable_ace, total_hand) remain unchanged
 def deal_card():
@@ -93,33 +93,36 @@ def train_and_test(alpha, episodes=100000):
         if i % L == 0:
             win_rate = test_policy(Q)
             test_results.append(win_rate)
-            print(f"Alpha: {alpha}, Episode: {i}, Win rate: {win_rate*100:.2f}%, Q(18,8,False,STICK): {specific_Q_values[-1]}")
+            print(f"Alpha: {alpha}, Episode {i}/{episodes}, Win Rate: {win_rate*100:.2f}%, Q(s={specific_state}, a={'STICK' if specific_action == ACTION_STICK else 'HIT'}): {specific_Q_values[-1]}")
 
     # set the color for the graph
     graph_color = 'g' if alpha == 0.01 else 'r'
     
     # Plotting the Q-value for the specific state-action pair over episodes
     plt.figure(figsize=(13, 7))
-    plt.plot(range(1, episodes + 1), specific_Q_values, label=f'Q(s=(18, 8, False), a=STICK), Alpha = {alpha}', color=graph_color)
-    plt.plot(range(1, episodes + 1), [np.mean(specific_Q_values)] * episodes, label=f'Mean Q(s=(18, 8, False), a=STICK), Alpha = {alpha}', color='b', linestyle='-')
+    plt.plot(range(1, episodes + 1), specific_Q_values,  label=f'Mean Q(s='+ str(specific_state) + f', a=' + ('STICK' if specific_action == ACTION_STICK else 'HIT') + f'), Alpha = {alpha}', color=graph_color)
+    plt.plot(range(1, episodes + 1), [np.mean(specific_Q_values)] * episodes, label=f'Mean Q(s='+ str(specific_state) + f', a=' + ('STICK' if specific_action == ACTION_STICK else 'HIT') + f'), Alpha = {alpha}', color='b', linestyle='-')
     plt.title('Q-value of Specific State-Action Pair Over Episodes')
     plt.xlabel('Episodes')
     plt.ylabel(f'Q(s=' + str(specific_state) + f', a=' + ('STICK' if specific_action == ACTION_STICK else 'HIT') + ')')
     plt.legend()
     plt.grid(True)
+    plt.tight_layout()
     plt.savefig(f'Assignments/Assignment3/Report/Q_Blackjack_Alpha_{alpha}.png')
     plt.show()
     
     # Plotting win rates after test episodes as before
     plt.figure(figsize=(13, 7))
     plt.plot(range(L, episodes + 1, L), test_results, label=f'Test Win Rate, Alpha = {alpha}', color=graph_color)
-    plt.plot(range(L, episodes + 1, L), [np.mean(test_results)] * len(test_results), label=f'Mean Test Win Rate, Alpha = {alpha}', color='b', linestyle='-')
+    plt.plot(range(L, episodes + 1, L), [np.mean(test_results)] * len(test_results), label=f'Mean Test Win Rate, Alpha = {alpha}', color='orange', linestyle='-')
     plt.title('Test Win Rate Over Episodes')
     plt.xlabel('Episodes')
     plt.ylabel('Win Rate')
     plt.legend()
     plt.grid(True)
-    plt.savefig(f'Assignments/Assignment3/Report/Win_Rate_Blackjack_Alpha_{alpha}.png')
+    plt.text(0.5, 0.1, f'Average Win Rate: {np.mean(test_results)*100:.2f}%', ha='center', va='center', transform=plt.gca().transAxes)
+    plt.tight_layout()
+    plt.savefig(f'Assignments/Assignment3/Report/Win_Rate_QBlackjack_Alpha_{alpha}.png')
     plt.show()
 
 
@@ -129,7 +132,7 @@ for alpha in ALPHAS:
     start_time = time.time()
     train_and_test(alpha, episodes=100000)
     end_time = time.time()
-    print(f"Training time taken for 100,000 episodes with alpha = {alpha}: {end_time - start_time:.2f} seconds")
+    print(f"Training and testing time taken for 100,000 episodes with alpha = {alpha}: {end_time - start_time:.2f} seconds")
 
 
 

@@ -6,6 +6,8 @@ import time # to measure time taken for 100,000 episodes
 ACTION_HIT = 1
 ACTION_STICK = 0
 ACTIONS = [ACTION_STICK, ACTION_HIT]
+SPECIFIC_STATE = (18, 8, False)  # Specific state to check the Q value for
+SPECIFIC_ACTION = ACTION_STICK  # Specific action to check the Q value for
 policy = {}
 for player_sum in range(12, 22):
     for dealer_card in range(1, 11):
@@ -85,7 +87,7 @@ def monte_carlo_ES(episodes):
             # Greedily update the policy for the state
             policy[state] = np.argmax([Q[(state, a)] for a in ACTIONS])
         if episode_num % 100 == 0:
-            Q_values.append(Q[((18, 8, False), ACTION_STICK)])
+            Q_values.append(Q[(SPECIFIC_STATE, SPECIFIC_ACTION)])
     return Q_values
 
 def play_game_episodes(episodes):
@@ -105,7 +107,7 @@ print("Training time taken for 10,000 episodes: ", end_time - start_time)
 
 # Plotting
 plt.figure(figsize=(14, 7))
-plt.title("Values of Q(s, a) for state (18, 8, False) and action STICK")
+plt.title(f"Values of Q(s, a) for state {SPECIFIC_STATE} and action {SPECIFIC_ACTION}")
 plt.xlabel("Episodes")
 plt.ylabel("Q(s, a)")
 plt.plot(range(100, 10001, 100), Q_values, marker='.', linestyle='-', color='r')
@@ -114,6 +116,20 @@ plt.tight_layout()
 # plt.savefig("Assignments/Assignment3/Report/Q_values.png")
 plt.show()
 
+print("Going to play 100,000 episodes to check the winning percentage")
+
 L = 100000
 wins, win_percentage = play_game_episodes(L)
-print(f"Out of {L} episodes, won {wins} times. Win percentage: {win_percentage}%")
+# plot the winning times for 100,000 episodes (binary plot)
+plt.figure(figsize=(14, 7))
+plt.title("Winning Times for 100,000 episodes")
+plt.xlabel("Episodes")
+plt.ylabel("Winning Times")
+plt.plot(range(1, L + 1), [1 if i <= wins else 0 for i in range(1, L + 1)], marker='.', linestyle='-', color='orange')  
+plt.grid(True, which="both", ls="-")
+plt.text(0.5, 0.9, f"Winning Percentage: {win_percentage:.2f}%", ha='center', va='center', transform=plt.gca().transAxes)
+plt.tight_layout()
+# plt.savefig("Assignments/Assignment3/Report/MCES1Winning_Times.png")
+plt.show()
+
+
