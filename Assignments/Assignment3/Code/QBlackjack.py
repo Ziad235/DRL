@@ -101,9 +101,10 @@ def train_and_test(alpha, episodes=100000):
     # Plotting the Q-value for the specific state-action pair over episodes
     plt.figure(figsize=(13, 7))
     plt.plot(range(1, episodes + 1), specific_Q_values, label=f'Q(s=(18, 8, False), a=STICK), Alpha = {alpha}', color=graph_color)
+    plt.plot(range(1, episodes + 1), [np.mean(specific_Q_values)] * episodes, label=f'Mean Q(s=(18, 8, False), a=STICK), Alpha = {alpha}', color='b', linestyle='-')
     plt.title('Q-value of Specific State-Action Pair Over Episodes')
     plt.xlabel('Episodes')
-    plt.ylabel('Q(s=(18, 8, False), a=STICK)')
+    plt.ylabel(f'Q(s=' + str(specific_state) + f', a=' + ('STICK' if specific_action == ACTION_STICK else 'HIT') + ')')
     plt.legend()
     plt.grid(True)
     plt.savefig(f'Assignments/Assignment3/Report/Q_Blackjack_Alpha_{alpha}.png')
@@ -112,6 +113,7 @@ def train_and_test(alpha, episodes=100000):
     # Plotting win rates after test episodes as before
     plt.figure(figsize=(13, 7))
     plt.plot(range(L, episodes + 1, L), test_results, label=f'Test Win Rate, Alpha = {alpha}', color=graph_color)
+    plt.plot(range(L, episodes + 1, L), [np.mean(test_results)] * len(test_results), label=f'Mean Test Win Rate, Alpha = {alpha}', color='b', linestyle='-')
     plt.title('Test Win Rate Over Episodes')
     plt.xlabel('Episodes')
     plt.ylabel('Win Rate')
