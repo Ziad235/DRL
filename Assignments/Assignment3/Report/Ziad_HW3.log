@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.6.30)  28 FEB 2024 19:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.6.30)  28 FEB 2024 22:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -778,25 +778,45 @@ File: Win_Draw_Loss_Rates_Alpha_0.1.png Graphic file (type png)
 <use Win_Draw_Loss_Rates_Alpha_0.1.png>
 Package pdftex.def Info: Win_Draw_Loss_Rates_Alpha_0.1.png  used on input line 88.
 (pdftex.def)             Requested size: 375.79733pt x 202.3524pt.
- [4 <./Q_Blackjack_Alpha_0.1.png> <./Win_Draw_Loss_Rates_Alpha_0.01.png>] [5 <./Win_Draw_Loss_Rates_Alpha_0.1.png>] 
+ [4 <./Q_Blackjack_Alpha_0.1.png> <./Win_Draw_Loss_Rates_Alpha_0.01.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 92--115
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 92--115
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 92--115
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 92--115
+
+ []
+
+[5 <./Win_Draw_Loss_Rates_Alpha_0.1.png>] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Ziad_HW3.aux)
 Package rerunfilecheck Info: File `Ziad_HW3.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 33939 strings out of 476025
- 796446 string characters out of 5790017
- 1857388 words of memory out of 5000000
- 53811 multiletter control sequences out of 15000+600000
- 520039 words of font info for 64 fonts, out of 8000000 for 9000
+ 33941 strings out of 476025
+ 796471 string characters out of 5790017
+ 1859388 words of memory out of 5000000
+ 53812 multiletter control sequences out of 15000+600000
+ 520346 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  98i,11n,103p,826b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Ziad_HW3.pdf (5 pages, 531978 bytes).
+Output written on Ziad_HW3.pdf (5 pages, 537826 bytes).
 PDF statistics:
- 84 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
- 9 named destinations out of 1000 (max. 500000)
+ 85 PDF objects out of 1000 (max. 8388607)
+ 51 compressed objects within 1 object stream
+ 10 named destinations out of 1000 (max. 500000)
  53 words of extra memory for PDF output out of 10000 (max. 10000000)
 
