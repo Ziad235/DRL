@@ -96,21 +96,52 @@ def monte_carlo_ES(episodes):
     return Q_values
 
 def play_game_episodes(episodes):
-    wins = 0
+    wins = []
+    draws = []
+    losses =  [] 
+
     for _ in range(episodes):
         _, result = play_episode()
-        if result == 1:  # Win condition
-            wins += 1
-    # Calculate win percentage
-    win_percentage = (wins / episodes) * 100
-    return wins, win_percentage
+        # Win condition
+        if result == 1:  
+            wins.append(result)
+        # Draw condition
+        elif result == 0:  
+            draws.append(result)
+        # Loss condition
+        else:  
+            losses.append(result)
+
+    win_percentage = (len(wins) / episodes)*100
+    draws_percentage = (len(draws) / episodes)*100
+    losses_percentage = (len(losses) / episodes)*100
+
+    return wins, win_percentage, draws, draws_percentage, losses, losses_percentage
+
+# function to plot winnings, losses, and draws 
+def plot_winnings_losses_draws(wins, draws, losses, episodes):
+    plt.figure(figsize=(14, 7))
+    plt.ylim(0, episodes)
+    plt.bar(["Wins", "Draws", "Losses"], [len(wins), len(draws), len(losses)], color=['green', 'blue', 'red'])
+    
+
+    for i, v in enumerate([len(wins), len(draws), len(losses)]):
+        plt.text(i, v + 0.01 * episodes, f"{v} ({v/episodes*100:.2f}%)", ha='center', va='bottom')
+
+    plt.title("Wins, Draws, and Losses for MCES2")
+    plt.grid(axis='y', linestyle='-')
+    plt.xlabel("Result")
+    plt.ylabel("Number of episodes")
+    plt.tight_layout()
+    plt.savefig("Assignments/Assignment3/Report/MCES2_Wins_Draws_Losses.png")
+    plt.show()
 
 # Run Monte Carlo ES for 10,000 episodes, and check how much time it takes
 start_time1 = time.time()
 Q_values = monte_carlo_ES(10000)
 end_time1 = time.time()
 
-# Plotting
+# Plotting the Q-value for the specific state-action pair over episodes during training
 plt.figure(figsize=(14, 7))
 plt.title(f"Values of Q(s, a) for state {SPECIFIC_STATE} and action {SPECIFIC_ACTION}")
 plt.xlabel("Episodes")
@@ -121,26 +152,16 @@ plt.tight_layout()
 # plt.savefig("Assignments/Assignment3/Report/Q_values2.png")
 plt.show()
 
-L = 100000
+# Play 100,000 episodes using the final policy
+test_episodes = 100000 
+print(f"Playing {test_episodes} test episodes...")
 start_time2 = time.time()
-wins, win_percentage = play_game_episodes(L)
+wins, win_percentage, draws, draws_percentage, losses, losses_percentage = play_game_episodes(test_episodes)
 end_time2 = time.time()
-# plot the winning times for 100,000 episodes (binary plot)
-plt.figure(figsize=(14, 7))
-plt.title("Winning Times for 100,000 episodes")
-plt.xlabel("Episodes")
-plt.ylabel("Winning Times")
-plt.plot(range(1, L + 1), [1 if i <= wins else 0 for i in range(1, L + 1)], marker='.', linestyle='-', color='orange')
-plt.grid(True, which="both", ls="-")
-plt.text(0.5, 0.9, f"Winning Percentage: {win_percentage:.2f}%", ha='center', va='center', transform=plt.gca().transAxes)
-plt.tight_layout()
-# plt.savefig("Assignments/Assignment3/Report/MCES2Winning_Times.png")
-plt.show()
+
+plot_winnings_losses_draws(wins, draws, losses, test_episodes)
+
 
 print(f"Training time taken for 10,000 episodes: {end_time1 - start_time1:.2f} seconds")
 print(f"Testing ime taken for 100,000 episodes: {end_time2 - start_time2:.2f} seconds")
 print(f"Total time taken: {end_time2 - start_time1:.2f} seconds")
-
-# Training time taken for 10,000 episodes: 0.48 seconds
-# Testing ime taken for 100,000 episodes: 1.63 seconds
-# Total time taken: 8.85 seconds

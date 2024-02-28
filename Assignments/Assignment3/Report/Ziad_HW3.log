@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.6.30)  27 FEB 2024 15:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.6.30)  28 FEB 2024 19:50
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -737,43 +737,66 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 File: Q_values.png Graphic file (type png)
 <use Q_values.png>
 Package pdftex.def Info: Q_values.png  used on input line 58.
-(pdftex.def)             Requested size: 505.88876pt x 252.94437pt.
+(pdftex.def)             Requested size: 404.70483pt x 202.3524pt.
+<MCES1_Wins_Draws_Losses.png, id=9, 1011.78pt x 505.89pt>
+File: MCES1_Wins_Draws_Losses.png Graphic file (type png)
+<use MCES1_Wins_Draws_Losses.png>
+Package pdftex.def Info: MCES1_Wins_Draws_Losses.png  used on input line 62.
+(pdftex.def)             Requested size: 404.70483pt x 202.3524pt.
+ [1{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
-Overfull \hbox (50.58864pt too wide) in paragraph at lines 58--59
- [] 
- []
-
-<Q_values2.png, id=9, 1011.78pt x 505.89pt>
+ <./Q_values.png>]
+<Q_values2.png, id=24, 1011.78pt x 505.89pt>
 File: Q_values2.png Graphic file (type png)
 <use Q_values2.png>
-Package pdftex.def Info: Q_values2.png  used on input line 66.
-(pdftex.def)             Requested size: 505.88876pt x 252.94437pt.
-
-Overfull \hbox (50.58864pt too wide) in paragraph at lines 66--67
- [] 
- []
-
-[1{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-
- <./Q_values.png>] [2 <./Q_values2.png>] 
+Package pdftex.def Info: Q_values2.png  used on input line 70.
+(pdftex.def)             Requested size: 404.70483pt x 202.3524pt.
+<MCES2_Wins_Draws_Losses.png, id=25, 1011.78pt x 505.89pt>
+File: MCES2_Wins_Draws_Losses.png Graphic file (type png)
+<use MCES2_Wins_Draws_Losses.png>
+Package pdftex.def Info: MCES2_Wins_Draws_Losses.png  used on input line 74.
+(pdftex.def)             Requested size: 404.70483pt x 202.3524pt.
+ [2 <./MCES1_Wins_Draws_Losses.png> <./Q_values2.png>]
+<Q_Blackjack_Alpha_0.01.png, id=34, 939.51pt x 505.89pt>
+File: Q_Blackjack_Alpha_0.01.png Graphic file (type png)
+<use Q_Blackjack_Alpha_0.01.png>
+Package pdftex.def Info: Q_Blackjack_Alpha_0.01.png  used on input line 82.
+(pdftex.def)             Requested size: 375.79733pt x 202.3524pt.
+<Q_Blackjack_Alpha_0.1.png, id=35, 939.51pt x 505.89pt>
+File: Q_Blackjack_Alpha_0.1.png Graphic file (type png)
+<use Q_Blackjack_Alpha_0.1.png>
+Package pdftex.def Info: Q_Blackjack_Alpha_0.1.png  used on input line 83.
+(pdftex.def)             Requested size: 375.79733pt x 202.3524pt.
+ [3 <./MCES2_Wins_Draws_Losses.png> <./Q_Blackjack_Alpha_0.01.png>]
+<Win_Draw_Loss_Rates_Alpha_0.01.png, id=44, 939.51pt x 505.89pt>
+File: Win_Draw_Loss_Rates_Alpha_0.01.png Graphic file (type png)
+<use Win_Draw_Loss_Rates_Alpha_0.01.png>
+Package pdftex.def Info: Win_Draw_Loss_Rates_Alpha_0.01.png  used on input line 87.
+(pdftex.def)             Requested size: 375.79733pt x 202.3524pt.
+<Win_Draw_Loss_Rates_Alpha_0.1.png, id=45, 939.51pt x 505.89pt>
+File: Win_Draw_Loss_Rates_Alpha_0.1.png Graphic file (type png)
+<use Win_Draw_Loss_Rates_Alpha_0.1.png>
+Package pdftex.def Info: Win_Draw_Loss_Rates_Alpha_0.1.png  used on input line 88.
+(pdftex.def)             Requested size: 375.79733pt x 202.3524pt.
+ [4 <./Q_Blackjack_Alpha_0.1.png> <./Win_Draw_Loss_Rates_Alpha_0.01.png>] [5 <./Win_Draw_Loss_Rates_Alpha_0.1.png>] 
 enddocument/afterlastpage: lastpage setting LastPage.
 (./Ziad_HW3.aux)
 Package rerunfilecheck Info: File `Ziad_HW3.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 33893 strings out of 476025
- 795028 string characters out of 5790017
- 1858388 words of memory out of 5000000
- 53775 multiletter control sequences out of 15000+600000
+ 33939 strings out of 476025
+ 796446 string characters out of 5790017
+ 1857388 words of memory out of 5000000
+ 53811 multiletter control sequences out of 15000+600000
  520039 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  98i,11n,103p,826b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on Ziad_HW3.pdf (2 pages, 146399 bytes).
+Output written on Ziad_HW3.pdf (5 pages, 531978 bytes).
 PDF statistics:
- 54 PDF objects out of 1000 (max. 8388607)
- 35 compressed objects within 1 object stream
- 5 named destinations out of 1000 (max. 500000)
- 23 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 84 PDF objects out of 1000 (max. 8388607)
+ 50 compressed objects within 1 object stream
+ 9 named destinations out of 1000 (max. 500000)
+ 53 words of extra memory for PDF output out of 10000 (max. 10000000)
 

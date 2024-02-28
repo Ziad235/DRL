@@ -71,14 +71,29 @@ def play_episode(Q, alpha, epsilon=EPSILON):
     return reward
 
 def test_policy(Q):
-    wins = 0
+    wins = []
+    draws = []
+    losses = []
+
     for _ in range(TEST_EPISODES):
         result = play_episode(Q, alpha=0, epsilon=0)  # Test with greedy policy
+        # Win condition: player wins or dealer busts
         if result == 1:
-            wins += 1
-    return wins / TEST_EPISODES
+            wins.append(result)
+        # Draw condition
+        elif result == 0:
+            draws.append(result)
+        # Loss condition: player loses or player busts
+        else:
+            losses.append(result)
 
-def train_and_test(alpha, episodes=10000):
+    win_rate = len(wins) / TEST_EPISODES
+    draw_rate = len(draws) / TEST_EPISODES
+    loss_rate = len(losses) / TEST_EPISODES
+
+    return wins, draws, losses, win_rate, draw_rate, loss_rate
+
+def train_and_test(alpha, episodes=100000):
     Q = {}
     test_results = []
     specific_Q_values = []  # To track Q(s, STICK) for the specific state over episodes
@@ -91,50 +106,57 @@ def train_and_test(alpha, episodes=10000):
         specific_Q_values.append(Q.get((specific_state, specific_action), 0))
         
         if i % L == 0:
-            win_rate = test_policy(Q)
-            test_results.append(win_rate)
-            print(f"Alpha: {alpha}, Episode {i}/{episodes}, Win Rate: {win_rate*100:.2f}%, Q(s={specific_state}, a={'STICK' if specific_action == ACTION_STICK else 'HIT'}): {specific_Q_values[-1]}")
+            wins, draws, losses, win_rate, draw_rate, loss_rate = test_policy(Q)
+            test_results.append([win_rate, draw_rate, loss_rate])
+            print(f"Alpha: {alpha}, Episode {i}/{episodes}, Win Rate: {win_rate*100:.2f}%, Draw Rate: {draw_rate*100:.2f}%, Loss Rate: {loss_rate*100:.2f}%, Q(s={specific_state}, a={'STICK' if specific_action == ACTION_STICK else 'HIT'}): {specific_Q_values[-1]}")
 
     # set the color for the graph
     graph_color = 'g' if alpha == 0.01 else 'r'
     
     # Plotting the Q-value for the specific state-action pair over episodes
     plt.figure(figsize=(13, 7))
+    plt.grid(True)
     plt.plot(range(1, episodes + 1), specific_Q_values,  label=f'Mean Q(s='+ str(specific_state) + f', a=' + ('STICK' if specific_action == ACTION_STICK else 'HIT') + f'), Alpha = {alpha}', color=graph_color)
     plt.plot(range(1, episodes + 1), [np.mean(specific_Q_values)] * episodes, label=f'Mean Q(s='+ str(specific_state) + f', a=' + ('STICK' if specific_action == ACTION_STICK else 'HIT') + f'), Alpha = {alpha}', color='b', linestyle='-')
-    plt.title('Q-value of Specific State-Action Pair Over Episodes')
+    plt.title('Q-value of Specific State-Action Pair Over Episodes for Alpha = ' + str(alpha))
     plt.xlabel('Episodes')
     plt.ylabel(f'Q(s=' + str(specific_state) + f', a=' + ('STICK' if specific_action == ACTION_STICK else 'HIT') + ')')
     plt.legend()
-    plt.grid(True)
     plt.tight_layout()
-    plt.savefig(f'Assignments/Assignment3/Report/Q_Blackjack_Alpha_{alpha}.png')
+    # plt.savefig(f'Assignments/Assignment3/Report/Q_Blackjack_Alpha_{alpha}.png')
     plt.show()
     
-    # Plotting win rates after test episodes as before
+    # Plotting win, draw, and loss rates over episodes
+    test_results = np.array(test_results)
     plt.figure(figsize=(13, 7))
-    plt.plot(range(L, episodes + 1, L), test_results, label=f'Test Win Rate, Alpha = {alpha}', color=graph_color)
-    plt.plot(range(L, episodes + 1, L), [np.mean(test_results)] * len(test_results), label=f'Mean Test Win Rate, Alpha = {alpha}', color='orange', linestyle='-')
-    plt.title('Test Win Rate Over Episodes')
-    plt.xlabel('Episodes')
-    plt.ylabel('Win Rate')
-    plt.legend()
     plt.grid(True)
-    plt.text(0.5, 0.1, f'Average Win Rate: {np.mean(test_results)*100:.2f}%', ha='center', va='center', transform=plt.gca().transAxes)
+    plt.plot(range(L, episodes + 1, L), test_results[:, 0], label='Win Rate', color='g')
+    plt.plot(range(L, episodes + 1, L), test_results[:, 1], label='Draw Rate', color='b')
+    plt.plot(range(L, episodes + 1, L), test_results[:, 2], label='Loss Rate', color='r')
+    for i in range(0, len(test_results)):
+        # get the average win, draw, and loss rates
+        average_win_rate = np.mean(test_results[:, 0])
+        average_draw_rate = np.mean(test_results[:, 1])
+        average_loss_rate = np.mean(test_results[:, 2])
+        plt.text(episodes/2, 0.5/2, f'Average Win Rate: {average_win_rate*100:.2f}%\nAverage Draw Rate: {average_draw_rate*100:.2f}%\nAverage Loss Rate: {average_loss_rate*100:.2f}%', ha='center', va='center', bbox=dict(facecolor='white', edgecolor='black', boxstyle='round,pad=1'))
+
+    plt.title('Win, Draw, and Loss Rates Over Episodes for Alpha = ' + str(alpha))
+    plt.xlabel('Episodes')
+    plt.ylabel('Average')
+    plt.legend()
     plt.tight_layout()
-    plt.savefig(f'Assignments/Assignment3/Report/Win_Rate_QBlackjack_Alpha_{alpha}.png')
+    # plt.savefig(f'Assignments/Assignment3/Report/Win_Draw_Loss_Rates_Alpha_{alpha}.png')
     plt.show()
+
+    return Q, test_results
 
 
 # Train and test for different alphas
 # test time taken for 100000 episodes
 for alpha in ALPHAS:
     start_time = time.time()
-    train_and_test(alpha, episodes=10000)
+    Q_values, test_results = train_and_test(alpha)
     end_time = time.time()
-    print(f"Training (for 10,000 episodes) and testing (for 100,000 episodes) time taken for episodes with alpha = {alpha}: {end_time - start_time:.2f} seconds")
-
-
-
-# Training (for 10,000 episodes) and testing (for 100,000 episodes) time taken for episodes with alpha = 0.01: 21.71 seconds
-# Training (for 10,000 episodes) and testing (for 100,000 episodes) time taken for episodes with alpha = 0.1: 19.48 seconds
+    print(f"Training (for 100,000 episodes) and testing (for 100,000 episodes, every 2000 training steps) time taken for episodes with alpha = {alpha}: {end_time - start_time:.2f} seconds")
+    wins, draws, losses, win_rate, draw_rate, loss_rate = test_policy(Q_values)
+    print(f"Alpha: {alpha}, Win Rate: {win_rate*100:.2f}%, Draw Rate: {draw_rate*100:.2f}%, Loss Rate: {loss_rate*100:.2f}%")
